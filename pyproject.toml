@@ -16,8 +16,35 @@ python-magic = "^0.4.27"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.4"
+pre-commit = "^3.7.1"
 black = "^24.4.0"
+isort = "^5.13.2"
+flake8 = "^7.1.0"
+flake8-pyproject = "^1.2.3"
+pytest = "^8.2.2"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+line_length = 88
+src_paths = ["medical_toolkit", "tests"]
+
+[tool.flake8]
+count = true
+max-line-length = 100
+statistics = true
+exclude = [
+    ".git",
+    ".venv",
+    ".vscode",
+]
+
+[tool.pytest.ini_options]
+addopts = "-vv"
+testpaths = "tests"

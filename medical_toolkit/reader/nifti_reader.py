@@ -1,11 +1,12 @@
 import SimpleITK as sitk
-from medical_toolkit.reader.base_reader import BaseReader
-from medical_toolkit.utils.extensions import NIFTI_EXT
 
+from medical_toolkit.reader.base_reader import BaseCTMRIReader
+from medical_toolkit.utils.extensions import NIFTI_EXT
 
 __all__ = ["NiftiReader"]
 
-class NiftiReader(BaseReader):
+
+class NiftiReader(BaseCTMRIReader):
     def __init__(self):
         super().__init__()
         self.extensions = NIFTI_EXT
@@ -35,6 +36,18 @@ class NiftiReader(BaseReader):
         Returns:
             dict: A dictionary containing the data array.
         """
-        sitk_reader = sitk.ReadImage(path, imageIO="NiftiImageIO")
-        data_array = sitk.GetArrayFromImage(sitk_reader)
-        return {"data_array": data_array}
+        nii_sitk = sitk.ReadImage(path, imageIO="NiftiImageIO")
+        data_array = sitk.GetArrayFromImage(nii_sitk)
+        spacing = nii_sitk.GetSpacing()
+        origin = nii_sitk.GetOrigin()
+        direction = nii_sitk.GetDirection()
+        resample_array = self.resample_image(nii_sitk, new_spacing=[1, 1, 1])
+
+        return {
+            "data_array": data_array,
+            "spacing": spacing,
+            "origin": origin,
+            "direction": direction,
+            "original_path": path,
+            "resample_array": resample_array,
+        }
