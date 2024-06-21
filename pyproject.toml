@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "medical-toolkit"
+version = "0.1.0"
+description = "Medical Toolkit processes diverse medical data formats (e.g., DICOM, NIFTI) with advanced techniques like windowing and normalization, generating NumPy arrays for versatile data analysis."
+authors = ["Your Name <you@example.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "~3.9.5"
+simpleitk = "^2.3.1"
+numpy = "^1.26.4"
+puremagic = "^1.21"
+python-magic = "^0.4.27"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.4"
+black = "^24.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
